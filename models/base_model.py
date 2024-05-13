@@ -8,8 +8,11 @@ class BaselModel:
         """ initilization of instance of BaselModel class"""
         self.id = str(uuuid.uuid4())
         self.created_at = datetime.now()
-        self.updated_at = datetime()
+        self.updated_at = datetime.now()
 
     def __str__(self):
         """String representation of an object"""
         return f"[{class_name}] ({self.id}) {self.__dict__}"
+
+    def save(self):
+        self.update_at = datetime()
