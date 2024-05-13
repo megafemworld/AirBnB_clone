@@ -9,3 +9,7 @@ class BaselModel:
         self.id = str(uuuid.uuid4())
         self.created_at = datetime.now()
         self.updated_at = datetime()
+
+    def __str__(self):
+        """String representation of an object"""
+        return f"[{class_name}] ({self.id}) {self.__dict__}"
