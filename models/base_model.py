@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from uuid import uuid4
 from datetime import datetime
+from models import storage
 """Parent class for BaselModel"""
 
 class BaseModel:
@@ -13,7 +14,7 @@ class BaseModel:
                     continue
                 else:
                     if 'at' in key:
-                        value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                        value = value.isoformat()
                         setattr(self, key, value)
                     else:
                         setattr(self, key, value)
@@ -21,6 +22,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
 
     def __str__(self):
@@ -29,12 +31,12 @@ class BaseModel:
 
     def save(self):
         """update instance attributes update_at"""
-        self.update_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """return dictionary containing all keys/values"""
-        obj_dict = self.__dict__.copy()
-        obj_dict['__class__'] = type(self).__name__
-        obj_dict['created_at'] = self.created_at.isoformat()
-        obj_dict['updated_at'] = self.updated_at.isoformat()
-        return obj_dict
+        dict_copy = self.__dict__.copy()
+        dict_copy['__class__'] = self.__class__.__name__
+        dict_copy['created_at'] = self.created_at.isoformat()
+        dict_copy['updated_at'] = self.updated_at.isoformat()
+        return dict_copy
