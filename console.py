@@ -1,11 +1,16 @@
 #!/usr/bin/python3
 
 import cmd
+from models.base_model import BaseModel
+
 
 class HBNBCommand(cmd.Cmd):
     """A interpreter for HBNB."""
 
     prompt = '(hbnb)'
+    
+    def do_create(self):
+
 
     def do_quit(self, arg):
         """exit from program"""
