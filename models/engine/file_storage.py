@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import json
+from models.user import User
 
 """serializes instances to a JSON file and deserializes JSON file to instances"""
 
