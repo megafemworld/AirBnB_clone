@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import cmd
 from models.base_model import BaseModel
+from models import storage
 
 class HBNBCommand(cmd.Cmd):
     """A interpreter for HBNB."""
@@ -26,24 +27,88 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id"""
         if not arg:
             print("** class name missing **")
-        elif  arg != "BaseModel":
+            return
+        try:
+            new_instance = eval(args)()
+            new_instance.save()
+            print(new_instance.id)
+        except NameError:
             print("** class doesn't exist **")
-        else:
-            inst = BaselModel()
-            inst.save()
-            print(inst.id)
 
     def do_show(self, args):
         """Prints the string representation of an instance"""
         args = args.split()
         if not args:
             print("** class name missing **")
-        elif arg1 == "BaselMode":
-            print("** class doesn't exist **")
-        elif arg2 is None:
+            return
+        if len(args) == 1:
             print("** instance id missing **")
-        else:
+            return
+        class_name, id_number = args
+        try:
+            obj_dict = storage.all()
+            key = f"{class_name}.{id_number}"
+            if key in obj_dict:
+                print(obj_dict[key])
+            else:
+                print("** no instance found **")
+                return
+        except NameError:
+            print("** class doesn't exist **")
+            return
 
+    def do_destroy(self, args):
+        """Deletes an instance based on the class name and id"""
+        args = args.split()
+        if not args:
+            print("** class name missing **")
+            return
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        class_name, id_number = args
+        try:
+            dest = storage.all()
+            key = f"{class_name}.{id_number}"
+            if key in dest:
+                del dest[key]
+                storage.save()
+            else:
+                print("** instance id missing **")
+                return
+        except NameError:
+            print("** class doesn't exist **")
+            return
+
+    def do_all(self, args):
+        """Prints all string representation of all instances based or not on the class name."""
+        obj_dict = storage.all()
+        if args:
+            try:
+                eval(args)
+                fil_obj = [str(obj) for key, obj in obj_dict.items() if key.startswith(args)]
+                print(fil_obj)
+            except NameError:
+                print("** class doesn't exist **")
+        else:
+            all_objs = [str(obj) for obj in obj_dict.values()]
+            print(all_objs)
+
+    def do_update(self, args):
+        """Updates an instance based on the class name and id by adding or updating attribute"""
+        args = args.split()
+        if not args:
+            print("** class name missing **")
+            return
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        if len(args) == 2:
+            print("** attribute name missing **")
+            return
+        if len(args) == 3:
+            print("** value missing **")
+            return
 
 
 
