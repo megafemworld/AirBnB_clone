@@ -14,7 +14,7 @@ class BaseModel:
                     continue
                 else:
                     if 'at' in key:
-                        value = value.isoformat()
+                        value = datetime.fromisoformat(value)
                         setattr(self, key, value)
                     else:
                         setattr(self, key, value)
