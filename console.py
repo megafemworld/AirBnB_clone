@@ -8,9 +8,6 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = '(hbnb)'
     
-    def do_create(self):
-
-
     def do_quit(self, arg):
         """exit from program"""
         return True
@@ -21,14 +18,15 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """empty line + ENTER shouldn’t execute anything"""
         pass
+
     def help_quit(self):
         """ information for the quit command."""
         print("Quit command to exit the program")
         print()
 
-    def do_create(self, arg):
+    def do_create(self, args):
         """Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id"""
-        if not arg:
+        if not args:
             print("** class name missing **")
             return
         try:
@@ -37,6 +35,7 @@ class HBNBCommand(cmd.Cmd):
             print(new_instance.id)
         except NameError:
             print("** class doesn't exist **")
+            return
 
     def do_show(self, args):
         """Prints the string representation of an instance"""
