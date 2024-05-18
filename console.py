@@ -111,6 +111,23 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 3:
             print("** value missing **")
             return
+        cl_name, obj_id, attr_name, attr_value = args[0], args[1], args[2], args[3].strip('"')
+        try:
+            obj_dict = storage.all()
+            key = f"{cl_name}.{obj_id}"
+            if key in obj_dict:
+                obj = obj_dict[key]
+                try:
+                    attr_type = type(getattr(obj, attr_name))
+                    attr_value = attr_type(attr_value)
+                except AttributeError:
+                    pass
+                setattr(obj, attr_name, attr_value)
+                obj.save()
+            else:
+                print("** no instance found **")
+        except NameError:
+            print("** class doesn't exist **")
 
 
 
