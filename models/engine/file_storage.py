@@ -1,6 +1,11 @@
 #!/usr/bin/python3
 import json
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 """serializes instances to a JSON file and deserializes JSON file to instances"""
 
@@ -24,12 +29,15 @@ class FileStorage:
 
 
     def reload(self):
-        """deserializes the JSON file to __objects"""
+        """deserializes the JSON file to __object"""
         try:
             with open(self.__file_path, 'r') as f:
                 data = json.load(f)
                 for key, value in data.items():
                     class_name, obj_id = key.split('.')
-                    self.__objects[key] = eval(class_name)(**value)
-        except Exception as e:
+                    obj_class = globals()[class_name]
+                    self.__objects[key] = obj_class(**value)
+        except FileNotFoundError:
             pass
+        except Exception as e:
+            print(f"Error loading data: {e}")
