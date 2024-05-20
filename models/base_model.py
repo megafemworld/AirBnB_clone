@@ -4,6 +4,7 @@ from datetime import datetime
 
 """Parent class for BaselModel"""
 
+
 class BaseModel:
     """ All attributes & methods of BaselModel"""
     def __init__(self, *args, **kwargs):
@@ -24,7 +25,6 @@ class BaseModel:
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
             storage.new(self)
-
 
     def __str__(self):
         """String representation of an object"""

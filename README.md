@@ -101,16 +101,3 @@ Once the command interpreter is running, you can use the following commands:
 
 Here are some example interactions with the command interpreter:
 
-```sh
-$ ./console.py
-(hbnb) create User
-d5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451
-(hbnb) show User d5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451
-[User] (d5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451) {'id': 'd5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451', 'created_at': datetime.datetime(...), 'updated_at': datetime.datetime(...)}
-(hbnb) update User d5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451 email "airbnb@mail.com"
-(hbnb) show User d5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451
-[User] (d5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451) {'email': 'airbnb@mail.com', 'id': 'd5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451', 'created_at': datetime.datetime(...), 'updated_at': datetime.datetime(...)}
-(hbnb) all User
-["[User] (d5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451) {'email': 'airbnb@mail.com', 'id': 'd5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451', 'created_at': datetime.datetime(...), 'updated_at': datetime.datetime(...)}"]
-(hbnb) destroy User d5d7d01c-89e0-4e33-a3fb-9f4f3c7b9451
-

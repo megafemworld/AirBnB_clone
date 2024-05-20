@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 import cmd
 from models.base_model import BaseModel
 from models import storage
@@ -9,18 +10,20 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class HBNBCommand(cmd.Cmd):
     """A interpreter for HBNB."""
-
     prompt = '(hbnb)'
-    
+
     def do_quit(self, arg):
         """exit from program"""
         return True
+
     def do_EOF(self, arg):
         """end of file to leave program"""
         print()
         return True
+
     def emptyline(self):
         """empty line + ENTER shouldn’t execute anything"""
         pass
@@ -31,7 +34,7 @@ class HBNBCommand(cmd.Cmd):
         print()
 
     def do_create(self, args):
-        """Creates a new instance of BaseModel, saves it (to the JSON file) and prints the id"""
+        """Creates a new instance ofaves it (to the JSON file) the id"""
         if not args:
             print("** class name missing **")
             return
@@ -89,12 +92,17 @@ class HBNBCommand(cmd.Cmd):
             return
 
     def do_all(self, args):
-        """Prints all string representation of all instances based or not on the class name."""
+        """Prints all string representabased or not on the class name."""
         obj_dict = storage.all()
         if args:
             try:
                 eval(args)
-                fil_obj = [str(obj) for key, obj in obj_dict.items() if key.startswith(args)]
+                fil_obj = []
+
+                for key, obj in obj_dict.items():
+                    if key.startswith(args):
+                        fil_obj.append(str(obj))
+
                 print(fil_obj)
             except NameError:
                 print("** class doesn't exist **")
@@ -103,7 +111,7 @@ class HBNBCommand(cmd.Cmd):
             print(all_objs)
 
     def do_update(self, args):
-        """Updates an instance based on the class name and id by adding or updating attribute"""
+        """Updates on the class name and id by adding or updating attribute"""
         args = args.split()
         if not args:
             print("** class name missing **")
@@ -117,7 +125,10 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 3:
             print("** value missing **")
             return
-        cl_name, obj_id, attr_name, attr_value = args[0], args[1], args[2], args[3].strip('"')
+        cl_name = args[0]
+        obj_id = args[1]
+        attr_name = args[2]
+        attr_value = args[3].strip('"')
         try:
             obj_dict = storage.all()
             key = f"{cl_name}.{obj_id}"
@@ -134,7 +145,6 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
         except NameError:
             print("** class doesn't exist **")
-
 
 
 if __name__ == '__main__':
