@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from uuid import uuid4
 from datetime import datetime
+import models
 
 """Parent class for BaselModel"""
 
@@ -8,7 +9,7 @@ from datetime import datetime
 class BaseModel:
     """ All attributes & methods of BaselModel"""
     def __init__(self, *args, **kwargs):
-        from models import storage
+        
         """ initilization of instance of BaselModel class"""
         if kwargs:
             for key, value in kwargs.items():
@@ -24,20 +25,20 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """String representation of an object"""
         return f"[{type(self).__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
-        from models import storage
+        
         """update instance attributes update_at"""
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
-        from models import storage
+       
         """return dictionary containing all keys/values"""
         dict_copy = self.__dict__.copy()
         dict_copy['__class__'] = self.__class__.__name__
