@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" entry point of the command interprete"""
 
 import cmd
 from models.base_model import BaseModel
