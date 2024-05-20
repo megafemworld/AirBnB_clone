@@ -78,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
         if len(argl) == 1:
             print("** instance id missing **")
             return
-        class_name, id_number = args
+        class_name, id_number = argl`
         dest = storage.all()
         keyc = f"{class_name}.{id_number}"         
         if class_name not in dest:
