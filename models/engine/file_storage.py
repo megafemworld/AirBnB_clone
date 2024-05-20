@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""serializes instances to a JSON file and dinstances"""
 import json
 from models.base_model import BaseModel
 from models.user import User
@@ -7,8 +8,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-
-"""serializes instances to a JSON file and dinstances"""
 
 
 class FileStorage:
@@ -26,7 +25,10 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
+        """sets in __objects the obj with key <obj class name>.id
+            Args:
+                obj: A class name of an of instance
+        """
         key = f"{obj.__class__.__name__}.{obj.id}"
         self.__objects[key] = obj
 
