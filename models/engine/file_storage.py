@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import json
+import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -37,14 +38,18 @@ class FileStorage:
 
     def reload(self):
         """deserializes the JSON file to __object"""
+        if not os.path.exists(self.__file_path):
+            return
         try:
-            with open(self.__file_path, 'r') as f:
+            with open(self.__file_path, 'r', encoding='utf-8') as f:
+                if os.path.getsize(self.__file_path) == 0:
+                    return
                 data = json.load(f)
                 for key, value in data.items():
                     class_name, obj_id = key.split('.')
                     obj_class = globals()[class_name]
                     self.__objects[key] = obj_class(**value)
-        except FileNotFoundError:
-            pass
+        except json.JSONDecodeError:
+            print("Error loading data: JSONDecodeError")
         except Exception as e:
             print(f"Error loading data: {e}")
