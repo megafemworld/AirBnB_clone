@@ -11,8 +11,8 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
 
         """ initilization of instance of BaselModel class
-            
-            Args:
+
+        Args:
                 *args (any): Unused.
                 **Kwargs (dict): Key/value pairs of atttributes.
         """
@@ -41,7 +41,7 @@ class BaseModel:
         return f"[{type(self).__name__}] ({self.id}) {self.__dict__}"
 
     def save(self):
-        
+
         """update instance attributes update_at"""
         self.updated_at = datetime.now()
         models.storage.save()
