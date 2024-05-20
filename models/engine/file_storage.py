@@ -7,7 +7,8 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
-"""serializes instances to a JSON file and deserializes JSON file to instances"""
+"""serializes instances to a JSON file and dinstances"""
+
 
 class FileStorage:
     __file_path = "file.json"
@@ -26,7 +27,6 @@ class FileStorage:
         """ serializes __objects to the JSON file"""
         with open(self.__file_path, 'w', encoding='utf-8') as f:
             json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
-
 
     def reload(self):
         """deserializes the JSON file to __object"""
