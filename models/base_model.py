@@ -1,9 +1,8 @@
 #!/usr/bin/python3
+"""Parent class for BaselModel"""
 from uuid import uuid4
 from datetime import datetime
 import models
-
-"""Parent class for BaselModel"""
 
 
 class BaseModel:
@@ -15,6 +14,11 @@ class BaseModel:
         Args:
                 *args (any): Unused.
                 **Kwargs (dict): Key/value pairs of atttributes.
+
+        """Parent class for BaselModel
+        args:
+            *args: argument (ununsed)
+            **kwargs: dictionary
         """
         tform = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = str(uuid4())

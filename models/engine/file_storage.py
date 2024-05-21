@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""serializes instances to a JSON file and dinstances"""
 import json
 import os
 from models.base_model import BaseModel
@@ -8,8 +9,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-
-"""serializes instances to a JSON file and dinstances"""
 
 
 class FileStorage:
@@ -27,14 +26,19 @@ class FileStorage:
         return FileStorage.__objects
 
     def new(self, obj):
-        """sets in __objects the obj with key <obj class name>.id"""
+        """sets in __objects the obj with key <obj class name>.id
+            Args:
+                obj: A class name of an of instance
+        """
         key = f"{obj.__class__.__name__}.{obj.id}"
         self.__objects[key] = obj
 
     def save(self):
         """ serializes __objects to the JSON file"""
-        with open(self.__file_path, 'w', encoding='utf-8') as f:
-            json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
+        obj_o = FileStorage.__objects
+        obj_ser = {obj: obj_o[obj].to_dict() for obj in obj_o.keys()}
+        with open(FileStorage.__file_path, "w") as f:
+            json.dump(obj_ser, f)
 
     def reload(self):
         """deserializes the JSON file to __object"""
@@ -53,3 +57,11 @@ class FileStorage:
             print("Error loading data: JSONDecodeError")
         except Exception as e:
             print(f"Error loading data: {e}")
+            with open(FileStorage.__file_path) as f:
+                data = json.load(f)
+                for o in data.values():
+                    cls_name = o["__class__"]
+                    del o["__class__"]
+                    self.new(eval(cls_name)(**o))
+        except FileNotFoundError:
+            return

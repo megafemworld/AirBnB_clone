@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" entry point of the command interprete"""
 
 import cmd
 from models.base_model import BaseModel
@@ -55,9 +56,12 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 1:
             print("** instance id missing **")
             return
-        class_name, id_number = args
+        class_name, id_number = args[0], args[1]
         try:
             obj_dict = storage.all()
+            if class_name not in obj_dict:
+                print("** class doesn't exist **")
+                return
             key = f"{class_name}.{id_number}"
             if key in obj_dict:
                 print(obj_dict[key])
@@ -70,26 +74,29 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, args):
         """Deletes an instance based on the class name and id"""
-        args = args.split()
-        if not args:
+        argl = args.split()
+        if  len(argl) == 0:
             print("** class name missing **")
             return
-        if len(args) == 1:
+        if len(argl) == 1:
             print("** instance id missing **")
             return
-        class_name, id_number = args
-        try:
-            dest = storage.all()
-            key = f"{class_name}.{id_number}"
-            if key in dest:
-                del dest[key]
-                storage.save()
-            else:
-                print("** instance id missing **")
-                return
-        except NameError:
+        class_name, id_number = argl[0], argl[1]
+        dest = storage.all()
+        keyc = f"{class_name}.{id_number}"         
+        if class_name not in dest:
             print("** class doesn't exist **")
             return
+        else:
+            if id_number not in dest:
+                print("** no instance found **")
+                return
+            if keyc in dest:
+                del dest[keyc]
+                storage.save()
+            else:
+                print("** no instance found **")
+                return
 
     def do_all(self, args):
         """Prints all string representabased or not on the class name."""
@@ -131,6 +138,9 @@ class HBNBCommand(cmd.Cmd):
         attr_value = args[3].strip('"')
         try:
             obj_dict = storage.all()
+            if cl_name not in obj_dict:
+                print("** class doesn't exist **")
+                return
             key = f"{cl_name}.{obj_id}"
             if key in obj_dict:
                 obj = obj_dict[key]
