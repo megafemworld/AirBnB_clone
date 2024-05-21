@@ -132,6 +132,9 @@ class HBNBCommand(cmd.Cmd):
         attr_value = args[3].strip('"')
         try:
             obj_dict = storage.all()
+            if cl_name not in obj_dict:
+                print("** class doesn't exist **")
+                return
             key = f"{cl_name}.{obj_id}"
             if key in obj_dict:
                 obj = obj_dict[key]
