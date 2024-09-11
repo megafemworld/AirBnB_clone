@@ -12,7 +12,7 @@ from models.place import Place
 from models.review import Review
 
 
-classes = ["BaseModel", "User"]
+classes = ["BaseModel", "User", "Place", "State", "Amentity", "Reveiew"]
 
 class HBNBCommand(cmd.Cmd):
 
