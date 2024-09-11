@@ -15,7 +15,6 @@ class BaseModel:
                 *args (any): Unused.
                 **Kwargs (dict): Key/value pairs of atttributes.
 
-        """Parent class for BaselModel
         args:
             *args: argument (ununsed)
             **kwargs: dictionary
@@ -49,11 +48,13 @@ class BaseModel:
         """update instance attributes update_at"""
         self.updated_at = datetime.now()
         models.storage.save()
+    '''
 
     def to_dict(self):
         """update instance attributes update_at"""
         self.updated_at = datetime.today()
         models.storage.save()
+    '''
 
     def to_dict(self):
         """return dictionary containing all keys/values"""

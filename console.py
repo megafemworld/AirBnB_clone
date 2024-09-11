@@ -156,6 +156,20 @@ class HBNBCommand(cmd.Cmd):
         except NameError:
             print("** class doesn't exist **")
 
+    def default(self, args):
+        """Override default method to handle some syntax"""
+        if '.' in args:
+            try:
+                cls_name, method_name = args.split('.')
+                method_name = method_name.strip('()')
+                if method_name == 'all':
+                    cls = eval(cls_name)
+                    if hasattr(cls, 'all'):
+                        print(cls.all())
+                        return
+            except (NameError, ValueError):
+                pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
