@@ -83,21 +83,16 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         class_name, id_number = argl[0], argl[1]
-        dest = storage.all()
-        keyc = f"{class_name}.{id_number}"         
-        if class_name not in dest:
+        if class_name not in classes:
             print("** class doesn't exist **")
             return
-        else:
-            if id_number not in dest:
-                print("** no instance found **")
-                return
-            if keyc in dest:
-                del dest[keyc]
-                storage.save()
-            else:
-                print("** no instance found **")
-                return
+        dest = storage.all()
+        key = f"{class_name}.{id_number}"         
+        if key not in dest:
+            print("** no instance found **")
+            return
+        del dest[key]
+        storage.save()
 
     def do_all(self, args):
         """Prints all string representabased or not on the class name."""
