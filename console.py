@@ -116,7 +116,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, args):
         """Updates on the class name and id by adding or updating attribute"""
         args = args.split()
-        if not args:
+        if len(args) == 0:
             print("** class name missing **")
             return
         if len(args) == 1:
@@ -132,25 +132,22 @@ class HBNBCommand(cmd.Cmd):
         obj_id = args[1]
         attr_name = args[2]
         attr_value = args[3].strip('"')
-        try:
-            obj_dict = storage.all()
-            if cl_name not in obj_dict:
-                print("** class doesn't exist **")
-                return
-            key = f"{cl_name}.{obj_id}"
-            if key in obj_dict:
-                obj = obj_dict[key]
-                try:
-                    attr_type = type(getattr(obj, attr_name))
-                    attr_value = attr_type(attr_value)
-                except AttributeError:
-                    pass
-                setattr(obj, attr_name, attr_value)
-                obj.save()
-            else:
-                print("** no instance found **")
-        except NameError:
+        obj_dict = storage.all()
+        if cl_name not in classes:
             print("** class doesn't exist **")
+            return
+        key = f"{cl_name}.{obj_id}"
+        if key in obj_dict:
+            obj = obj_dict[key]
+            try:
+                attr_type = type(getattr(obj, attr_name))
+                attr_value = attr_type(attr_value)
+            except AttributeError:
+                pass
+            setattr(obj, attr_name, attr_value)
+            obj.save()
+        else:
+            print("** no instance found **")
 
     def default(self, args):
         """Override default method to handle some syntax"""
