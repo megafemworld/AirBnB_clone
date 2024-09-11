@@ -31,7 +31,7 @@ class FileStorage:
                 obj: A class name of an of instance
         """
         key = f"{obj.__class__.__name__}.{obj.id}"
-        Filestorage.__objects[key] = obj
+        self.__objects[key] = obj
 
     def save(self):
         """ serializes __objects to the JSON file"""
