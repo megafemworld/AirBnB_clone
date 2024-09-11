@@ -12,7 +12,7 @@ from models.place import Place
 from models.review import Review
 
 
-classes = ["BaseModel"]
+# classes = ["BaseModel"]
 
 class HBNBCommand(cmd.Cmd):
 
@@ -63,7 +63,7 @@ class HBNBCommand(cmd.Cmd):
             return
         class_name, id_number = args[0], args[1]
         
-        if class_name not in classes:
+        if HBNBCommand.class_name not in classes:
             print("** class doesn't exist **")
             return
         obj_dict = storage.all()
