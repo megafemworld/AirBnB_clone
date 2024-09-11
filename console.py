@@ -13,6 +13,9 @@ from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
+
+    classes = ["BaseModel"]
+
     """A interpreter for HBNB."""
     prompt = '(hbnb)'
 
@@ -57,19 +60,16 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         class_name, id_number = args[0], args[1]
-        try:
-            obj_dict = storage.all()
-            if class_name not in obj_dict:
-                print("** class doesn't exist **")
-                return
-            key = f"{class_name}.{id_number}"
-            if key in obj_dict:
-                print(obj_dict[key])
-            else:
-                print("** no instance found **")
-                return
-        except NameError:
+        
+        if class_name not in classes:
             print("** class doesn't exist **")
+            return
+        obj_dict = storage.all()
+        key = f"{class_name}.{id_number}"
+        if key in obj_dict:
+            print(obj_dict[key])
+        else:
+            print("** no instance found **")
             return
 
     def do_destroy(self, args):
